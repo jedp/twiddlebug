@@ -1,0 +1,17 @@
+{
+    "name": "twiddlebug"
+  , "version": "0.0.1"
+  , "description": "A real-time twitter feed parser"
+
+  , "private": true
+  , "author": "Jed Parsons <https://github.com/jedp/>"
+
+  , "main": "twiddlebug.js"
+
+  , "dependencies": {
+      "ntwitter": "0.2.10"
+    , "optimist": "0.3.1"
+    , "wordwrap": "0.0.2"
+
+  }
+}
