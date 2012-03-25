@@ -3,16 +3,13 @@
 *.swp
 *.swo
 
-# twitter keys
+# twitter keys - for when you cp env.sh.dist env.sh
 env.sh
 
 # other stuff
-*.zip
-*.gz
-*.tar
-*.log
 .DS_Store?
 
 # locally installed node modules
 node_modules
+.gitmodules
 

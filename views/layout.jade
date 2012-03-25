@@ -1,0 +1,31 @@
+!!!5
+html
+  head
+    title Twiddlebug
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/headjs/dist/head.load.min.js')
+
+  body
+    #tweet-template(style='display: none')
+      strong {{ user.screen_name }}
+      div {{ text }}
+      time {{ created_at }}
+  
+    != body
+
+  script
+    head.js(
+      {jquery: "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"},
+      {socket_io: "/socket.io/socket.io.js"},
+      {underscore: "/javascripts/underscore/underscore-min.js"},
+      {backbone: "/javascripts/backbone/backbone-min.js"},
+      {twiddlebug: "/javascripts/client.js"}
+    );
+
+    head(function() {
+      var view = new ApplicationView();
+      view.render();
+    });
+
+
+    

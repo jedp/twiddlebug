@@ -46,6 +46,8 @@ Twiddlebug.prototype.stream = function(topics) {
   });
 };
 
+module.exports = Twiddlebug;
+
 if (!module.parent) {
   var cols = process.stdout.getWindowSize()[0];
   var wrap = require('wordwrap')(20, cols-20);
@@ -68,7 +70,6 @@ if (!module.parent) {
     var text = wrap(data.text);
     var screen_name = '@' + data.user.screen_name;
     text = screen_name + text.slice(screen_name.length) + '\n';
-    console.log(text);
   });
 
   twiddlebug.on('error', function(err) {
