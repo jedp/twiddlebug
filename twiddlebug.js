@@ -76,7 +76,7 @@ Twiddlebug.prototype.updateTopics = function(topics) {
   var now = (new Date()).getTime();
 
   // Only update if it's been two mins since the last update
-  if (now - this.lastUpdate > 1000) {
+  if (now - this.lastUpdate > 120 * 1000) {
     this.lastUpdate = now;
     this.awaitingTopicUpdate = false;
     this._reconnectStream();
@@ -84,7 +84,7 @@ Twiddlebug.prototype.updateTopics = function(topics) {
   // Maybe try again in two minutes
   } else if (! this.awaitingTopicUpdate) {
     this.awaitingTopicUpdate = true;
-    setTimeout(this.updateTopics, 5000);
+    setTimeout(this.updateTopics, 120 * 1000);
   } 
 }
 
@@ -98,7 +98,7 @@ Twiddlebug.prototype._reconnectStream = function() {
   // _getTwitter as above, thinking the connection would be cleaned
   // up, but it's not - presumably because there are still bound
   // event handlers!
-t 
+ 
   var self = this;
 
   this.stream = this._getTwitter().stream('user', {track:self.currentTopics.join(',')}, function(stream) {
@@ -127,6 +127,11 @@ t
 module.exports = Twiddlebug;
 
 if (!module.parent) {
+  // a simple command-line interface
+  // example
+  //
+  //     node twiddlebug.js -t #twitter -t music
+  //
   var cols = process.stdout.getWindowSize()[0];
   var wrap = require('wordwrap')(20, cols-20);
   var argv = require('optimist')
@@ -148,6 +153,7 @@ if (!module.parent) {
     var text = wrap(data.text);
     var screen_name = '@' + data.user.screen_name;
     text = screen_name + text.slice(screen_name.length) + '\n';
+    console.log(text);
   });
 
   twiddlebug.on('error', function(err) {
@@ -157,5 +163,5 @@ if (!module.parent) {
 
   twiddlebug.on('end', function() { console.log("disconnected") });
 
-  twiddlebug.stream(track);
+  twiddlebug.updateTopics(track);
 }
