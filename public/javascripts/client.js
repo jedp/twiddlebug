@@ -67,7 +67,9 @@ var FeedView = Backbone.Model.extend({
 
   displayTweet: function(tweet) {
     var view = new TweetView({model: tweet});
-    $(this.el).prepend(view.render().el);
+    var el = view.render().el;
+    $(el).find('time').timeago();
+    $(this.el).prepend(el);
   },
 });
 
@@ -84,19 +86,34 @@ var ApplicationView = Backbone.View.extend({
 
   el: $('#content'),
 
+  events: {
+    "keypress #search": "updateStream"
+  },
+
   initialize: function() {
     this.feedView = new FeedView();
 
     this.socket = io.connect();
 
+    this.search = $('#search');
+
     var self = this;
-    this.socket.on('message', function(data) {
+    this.socket.on('tweet', function(data) {
+      // change timestamp to ISO 8601 for timeago
+      data.created_at = (new Date(data.created_at)).toISOString();
       self.feedView.addTweet(data);
     });
 
     return this;
-  }
+  },
 
+  updateStream: function(evt) {
+    if (evt.keyCode != 13) return;
+    if (!this.search.val()) return;
+
+    this.socket.send(JSON.stringify({subscribe: this.search.val().trim()}));
+    this.search.val('');
+  }
 });
 
 

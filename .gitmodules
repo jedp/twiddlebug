@@ -7,3 +7,6 @@
 [submodule "public/javascripts/headjs"]
 	path = public/javascripts/headjs
 	url = git://github.com/headjs/headjs.git
+[submodule "public/javascripts/timeago"]
+	path = public/javascripts/timeago
+	url = git://github.com/rmm5t/jquery-timeago.git

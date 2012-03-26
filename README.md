@@ -2,7 +2,7 @@
 twiddlebug
 ==========
 
-A little twitter feed reader.
+A teensy little twitter feed reader.
 
 
 Features

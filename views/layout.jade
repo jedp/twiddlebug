@@ -7,15 +7,20 @@ html
 
   body
     #tweet-template(style='display: none')
-      strong {{ user.screen_name }}
-      div {{ text }}
-      time {{ created_at }}
+      div.tweet
+        img(src="{{ user.profile_image_url }}", class='image')
+        div 
+          span.name {{ user.name }}
+          span.screen_name {{ user.screen_name }}
+        div.text {{ text }}
+        time(class="timeago", datetime="{{ created_at }}") {{ created_at }}
   
     != body
 
   script
     head.js(
       {jquery: "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"},
+      {timeago: "/javascripts/timeago/jquery.timeago.js"},
       {socket_io: "/socket.io/socket.io.js"},
       {underscore: "/javascripts/underscore/underscore-min.js"},
       {backbone: "/javascripts/backbone/backbone-min.js"},
@@ -23,6 +28,20 @@ html
     );
 
     head(function() {
+      jQuery.timeago.settings.strings = {
+         prefixAgo: "",
+         prefixFromNow: "in ",
+         suffixAgo: "",
+         suffixFromNow: "",
+         seconds: "%d s",
+         minute: "%d m",
+         minutes: "%d m",
+         hour: "%d h",
+         hours: "%d h",
+         day: "%d d",
+         days: "%d d"
+      };
+    
       var view = new ApplicationView();
       view.render();
     });
