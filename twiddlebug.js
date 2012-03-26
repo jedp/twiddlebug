@@ -98,7 +98,7 @@ Twiddlebug.prototype._reconnectStream = function() {
   // _getTwitter as above, thinking the connection would be cleaned
   // up, but it's not - presumably because there are still bound
   // event handlers!
-
+t 
   var self = this;
 
   this.stream = this._getTwitter().stream('user', {track:self.currentTopics.join(',')}, function(stream) {

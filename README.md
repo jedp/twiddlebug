@@ -4,6 +4,8 @@ twiddlebug
 
 A teensy little twitter feed reader.
 
+Very much work in progress.
+
 
 Features
 --------
